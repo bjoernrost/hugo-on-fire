@@ -1,25 +1,12 @@
-FROM node:13.10-alpine
+FROM klakegg/hugo:0.82.0-ext-alpine-ci
 
-LABEL maintainer="Wajahat Karim (https://wajahatkarim.com)"
+LABEL maintainer="Bjoern Rost"
 
-# Get Hugo Version
-ARG HUGO_VERSION=0.67.1
-
-# Downloading & Installing Hugo & Firebase
-RUN set -x && \
-    apk add --update --upgrade --no-cache wget ca-certificates && \
-    update-ca-certificates && \
-    cd /tmp && \
-
-    # Download Hugo
-    wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz -O hugo.tar.gz && \
-    tar xzf hugo.tar.gz && \
-    mv hugo /usr/bin/hugo && \
-    rm -r * && \
-    apk del --purge wget && \
-
-    # Install Firebase Tools
-    npm install -g firebase-tools
+#RUN npm install -g firebase-tools
+RUN apk add curl && \
+    apk add sudo && \
+    apk add gcompat && \
+    curl -sL https://firebase.tools | bash
 
 # Start the building & deploying now
 ADD entrypoint.sh /entrypoint.sh
