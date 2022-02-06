@@ -1,4 +1,4 @@
-FROM klakegg/hugo:0.83.1-ext-alpine-ci
+FROM klakegg/hugo:ext-alpine-ci
 
 LABEL maintainer="Bjoern Rost"
 
